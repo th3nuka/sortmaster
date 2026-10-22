@@ -1,71 +1,38 @@
-# SortMaster — Deployment & Hosting Guide
+# SortMaster — 100% Static Web Hosting Guide
 
-This archive contains everything needed to run and host the **SortMaster — DSA Sorting Academy** application on any cloud provider or server.
+SortMaster is a completely static, browser-executable web application. All 16 sorting algorithms, step-by-step animations, code academy, and quizzes run directly in the browser via JavaScript.
 
----
-
-## Option 1: One-Click Cloud Deployment (Render / Railway / Fly.io)
-
-### Deploying on Render (Free / Low Cost)
-1. Push this project to a GitHub or GitLab repository (or upload the zip).
-2. Go to [render.com](https://render.com) and click **New + > Web Service**.
-3. Connect your repository.
-4. Set the following settings:
-   - **Environment:** Docker (Render will automatically detect the included `Dockerfile`)
-   - **Branch:** `main` (or your default branch)
-5. Click **Create Web Service**.
-   - Render automatically builds and hosts the app on HTTPS.
-   - Dynamic port routing (`PORT` environment variable) is pre-configured.
-
-### Deploying on Railway
-1. Go to [railway.app](https://railway.app) and create a new project.
-2. Choose **Deploy from GitHub repo**.
-3. Railway will detect the `Dockerfile` and deploy automatically with zero extra configuration.
+**Zero backend servers, zero Docker, zero configuration, and 100% free hosting.**
 
 ---
 
-## Option 2: Docker Container (Any VPS / Cloud Server)
+## Option 1: Free Static Hosting on Render (No Docker)
 
-Build and run the containerized application on any Linux, Mac, or Windows machine with Docker:
-
-```bash
-# 1. Build the Docker image
-docker build -t sortmaster-academy .
-
-# 2. Run the container on port 80 (or 8080)
-docker run -d -p 8080:8080 --name sortmaster sortmaster-academy
-
-# 3. Access in browser
-http://localhost:8080
-```
+1. Go to **[https://render.com](https://render.com)** and log in with GitHub.
+2. Click **New +** ➔ **Static Site**.
+3. Select your repository: **`th3nuka/sortmaster`**.
+4. Configure settings:
+   - **Name:** `sortmaster`
+   - **Branch:** `main`
+   - **Build Command:** *(leave empty)*
+   - **Publish Directory:** `.` *(a single dot for the root folder)*
+5. Click **Create Static Site**.
+   - Your site will be live immediately on a free `https://sortmaster.onrender.com` domain with free SSL/HTTPS!
 
 ---
 
-## Option 3: Direct Java Standalone Execution (Any VPS / Server)
+## Option 2: Free Hosting on GitHub Pages
 
-If you have Java 21+ installed on your server (Ubuntu, Debian, CentOS, macOS, etc.):
-
-```bash
-# Run the pre-compiled production JAR:
-java -jar target/sortmaster-academy-1.0.0.jar
-
-# Or run in the background (as a systemd service or nohup):
-nohup java -jar target/sortmaster-academy-1.0.0.jar > sortmaster.log 2>&1 &
-```
-
-To specify a custom port:
-```bash
-java -Dserver.port=80 -jar target/sortmaster-academy-1.0.0.jar
-```
+1. Open your repository on GitHub: **[https://github.com/th3nuka/sortmaster](https://github.com/th3nuka/sortmaster)**.
+2. Go to **Settings** ➔ **Pages** (in the left sidebar).
+3. Under **Branch**, select **`main`** and folder **`/ (root)`**.
+4. Click **Save**.
+   - Your website will be live in ~60 seconds at:
+     **`https://th3nuka.github.io/sortmaster/`**
 
 ---
 
-## Option 4: Static-Only Frontend (Optional)
+## Option 3: Local Offline Use
 
-All static web assets are located in:
-`src/main/resources/static/`
-- `index.html`
-- `css/`
-- `js/`
-
-*Note: The frontend interacts with the REST API at `/api/*` for generating sorting animations and comparing algorithms. When hosted via Spring Boot or Docker (Options 1–3), both the frontend UI and the algorithm engine are seamlessly served together from the same origin.*
+Just double-click `index.html` in your browser!
+The application runs 100% offline with zero server requirements.

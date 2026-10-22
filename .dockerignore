@@ -1,6 +1,0 @@
-target/
-.git/
-.vscode/
-test-js/
-*.zip
-*.log
