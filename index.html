@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SortMaster — Interactive DSA Sorting Academy. Master 16 sorting algorithms through step-by-step animations, real Java and Python code, Big-O explanations, and practice quizzes.">
+  <title>SortMaster — DSA Sorting Academy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2338bdf8%22 stroke-width=%222%22><path d=%22M3 6h18M7 12h10M10 18h4%22/></svg>">
+</head>
+<body>
+  <!-- Ambient Background Glows -->
+  <div class="bg-glow-orb-1"></div>
+  <div class="bg-glow-orb-2"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <a href="#" class="nav-brand" onclick="App.switchView('view-home'); return false;">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18M6 12h12M9 18h6"/>
+        </svg>
+      </div>
+      <span>SortMaster</span>
+      <span class="brand-badge">Academy</span>
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item">
+        <button class="active" data-view="view-home" id="nav-btn-home">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-view="view-visualizer" id="nav-btn-visualizer">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Visualizer
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-view="view-study" id="nav-btn-study">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Study Guide
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-view="view-quiz" id="nav-btn-quiz">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Quiz & Practice
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-view="view-compare" id="nav-btn-compare">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+          Compare Lab
+        </button>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+        <svg class="theme-icon sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Workspace Container -->
+  <main class="app-container">
+
+    <!-- ======================================================================
+         VIEW 1: HOME DASHBOARD
+         ====================================================================== -->
+    <section id="view-home" class="tab-view active">
+      <div class="hero-banner">
+        <div class="hero-content">
+          <div class="hero-tag">University DSA Interactive Platform</div>
+          <h1 class="hero-title">
+            Master <span>16 Sorting Algorithms</span> Visually
+          </h1>
+          <p class="hero-description">
+            Step through authentic execution events with animated comparison connections, study synchronized Java and Python implementations side-by-side, analyze Big-O complexity trade-offs, and test your knowledge with interactive practice quizzes.
+          </p>
+          <div class="hero-cta">
+            <button class="btn-card primary" id="hero-cta-visualizer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Launch Visualizer
+            </button>
+            <button class="btn-card" id="hero-cta-quiz">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Take a Practice Quiz
+            </button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">16</span>
+              <span class="stat-label">Sorting Algorithms</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">Java &amp; Python</span>
+              <span class="stat-label">Full Implementations</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">Dynamic</span>
+              <span class="stat-label">Comparison Arcs &amp; States</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">Spring Boot 3</span>
+              <span class="stat-label">REST Execution Engine</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters & Search -->
+      <div class="filter-deck">
+        <div class="search-box">
+          <span class="search-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" id="home-search-input" class="search-input" placeholder="Search algorithms (e.g. Quick, O(n log n), Stable)..." aria-label="Search algorithms">
+        </div>
+        <div class="category-pills">
+          <button class="pill-btn active" data-filter="all">All (16)</button>
+          <button class="pill-btn" data-filter="exchange">Exchange</button>
+          <button class="pill-btn" data-filter="selection">Selection</button>
+          <button class="pill-btn" data-filter="insertion">Insertion</button>
+          <button class="pill-btn" data-filter="divide">Divide &amp; Conquer</button>
+          <button class="pill-btn" data-filter="distribution">Distribution</button>
+          <button class="pill-btn" data-filter="hybrid">Hybrid</button>
+          <button class="pill-btn" data-filter="stable">Stable Only</button>
+        </div>
+      </div>
+
+      <!-- 16 Algorithm Cards Grid -->
+      <div class="algorithm-grid" id="algorithm-cards-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 2: SORTING VISUALIZER WORKSPACE
+         ====================================================================== -->
+    <section id="view-visualizer" class="tab-view">
+      <div class="visualizer-container">
+        
+        <!-- Controls Card -->
+        <div class="visualizer-controls-card">
+          <div class="controls-row-top">
+            <div class="select-group">
+              <label for="visualizer-algo-select" class="select-label">Algorithm:</label>
+              <select id="visualizer-algo-select" class="custom-select" aria-label="Select Sorting Algorithm">
+                <!-- Options populated dynamically -->
+              </select>
+            </div>
+
+            <!-- Sorting Order Selector (Ascending / Descending) -->
+            <div class="sorting-order-group">
+              <label class="select-label">Sort Order:</label>
+              <div class="sorting-order-control" id="order-selector" role="radiogroup" aria-label="Sorting Order">
+                <button type="button" class="order-btn active" id="order-btn-asc" role="radio" aria-checked="true" data-order="ASCENDING" title="Sort in Ascending Order (Smallest to Largest)">
+                  <svg class="order-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="19" x2="12" y2="5"></line>
+                    <polyline points="5 12 12 5 19 12"></polyline>
+                  </svg>
+                  <span>Ascending</span>
+                </button>
+                <button type="button" class="order-btn" id="order-btn-desc" role="radio" aria-checked="false" data-order="DESCENDING" title="Sort in Descending Order (Largest to Smallest)">
+                  <svg class="order-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                  </svg>
+                  <span>Descending</span>
+                </button>
+              </div>
+              <span class="order-status-badge" id="order-status-badge" aria-live="polite">Ascending: Smallest to Largest</span>
+            </div>
+
+            <div class="preset-buttons">
+              <button class="preset-btn" data-preset="random">Random</button>
+              <button class="preset-btn" data-preset="reversed">Reversed</button>
+              <button class="preset-btn" data-preset="nearly_sorted">Nearly Sorted</button>
+              <button class="preset-btn" data-preset="few_unique">Few Unique</button>
+              <button class="preset-btn" id="btn-custom-array-modal">Custom Array...</button>
+            </div>
+          </div>
+
+          <div class="controls-row-bottom">
+            <!-- Playback Buttons -->
+            <div class="playback-btn-group">
+              <button class="ctrl-btn" id="reset-btn" title="Reset to Start" aria-label="Reset to Start">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2.5"/></svg>
+              </button>
+              <button class="ctrl-btn" id="prev-btn" title="Previous Step" aria-label="Previous Step">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/></svg>
+              </button>
+              <button class="ctrl-btn play-btn" id="play-btn" title="Play Animation" aria-label="Play / Pause">
+                <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </button>
+              <button class="ctrl-btn" id="next-btn" title="Next Step" aria-label="Next Step">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/></svg>
+              </button>
+              <button class="ctrl-btn" id="jump-end-btn" title="Jump to End" aria-label="Jump to End">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"/></svg>
+              </button>
+              <button class="ctrl-btn" id="btn-restart" title="Restart Animation" aria-label="Restart Animation">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              </button>
+              <button class="ctrl-btn" id="btn-new-random-array" title="New Random Array" aria-label="New Random Array">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              </button>
+            </div>
+
+            <!-- Sliders -->
+            <div class="sliders-container">
+              <div class="slider-group">
+                <span class="slider-label">Speed: <span id="speed-value-label">3.3x</span></span>
+                <input type="range" id="speed-slider" class="custom-slider" min="1" max="100" value="65" aria-label="Animation Speed Slider">
+              </div>
+              <div class="slider-group">
+                <span class="slider-label">Size: <span id="size-value-label">24</span></span>
+                <input type="range" id="size-slider" class="custom-slider" min="6" max="60" value="24" aria-label="Array Size Slider">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry Counters -->
+        <div class="metrics-strip">
+          <div class="metric-pill">
+            <span class="metric-name">Comparisons</span>
+            <span class="metric-count highlight-compare" id="metric-comparisons">0</span>
+          </div>
+          <div class="metric-pill">
+            <span class="metric-name">Swaps</span>
+            <span class="metric-count highlight-swap" id="metric-swaps">0</span>
+          </div>
+          <div class="metric-pill">
+            <span class="metric-name">Writes / Shifts</span>
+            <span class="metric-count highlight-write" id="metric-writes">0</span>
+          </div>
+          <div class="metric-pill">
+            <span class="metric-name">Step Tracker</span>
+            <span class="metric-count" style="font-size: 1.15rem;">
+              <span id="metric-step">0</span> / <span id="metric-total-steps">0</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Visualizer Stage Card (Animated Rectangular Blocks + SVG Connector Overlay) -->
+        <div class="stage-card" id="stage-card">
+          <!-- Dynamic SVG Overlay for comparison arcs and swap connecting lines -->
+          <svg id="visualizer-svg-overlay" class="visualizer-svg-overlay" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="arc-grad-compare" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="50%" stop-color="#06b6d4" />
+                <stop offset="100%" stop-color="#38bdf8" />
+              </linearGradient>
+              <linearGradient id="arc-grad-swap" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f87171" />
+                <stop offset="50%" stop-color="#ef4444" />
+                <stop offset="100%" stop-color="#b91c1c" />
+              </linearGradient>
+              <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+              <filter id="glow-red" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <g id="svg-connections-layer"></g>
+          </svg>
+
+          <!-- Algorithm Specific Visual Overlay / Partition Shelf -->
+          <div id="algo-specific-shelf" class="algo-specific-shelf"></div>
+
+          <!-- Animated Rectangular Blocks Container -->
+          <div class="stage-bars-container" id="visualizer-bars">
+            <!-- Animated rectangular blocks rendered dynamically -->
+          </div>
+
+          <!-- Progress Track -->
+          <div class="step-progress-wrapper">
+            <div class="step-progress-meta">
+              <span>Execution Timeline</span>
+              <span id="timeline-status">Active</span>
+            </div>
+            <div class="step-progress-track">
+              <div class="step-progress-fill" id="step-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Educational Message Narrative Card -->
+        <div class="explanation-card">
+          <div class="explanation-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <div class="explanation-text">
+            <span class="event-badge compare" id="explanation-badge">START</span>
+            <span id="explanation-text">Press Play or Step Forward to begin inspecting algorithm execution.</span>
+          </div>
+        </div>
+
+        <!-- Visualizer Legend -->
+        <div class="visualizer-legend">
+          <div class="legend-item"><span class="legend-dot default"></span> Default Element</div>
+          <div class="legend-item"><span class="legend-dot comparing"></span> Comparing (Active Arc)</div>
+          <div class="legend-item"><span class="legend-dot swapping"></span> Swapping / Moving (Red)</div>
+          <div class="legend-item"><span class="legend-dot pivot"></span> Pivot / Boundary (Purple)</div>
+          <div class="legend-item"><span class="legend-dot sorted"></span> Sorted Position (Green)</div>
+        </div>
+
+        <!-- ======================================================================
+             SOURCE CODE PANEL (Positioned directly beneath animated array)
+             ====================================================================== -->
+        <div class="code-editor-panel" id="code-editor-panel">
+          <div class="code-editor-header">
+            <div class="code-editor-title-group">
+              <span class="code-editor-indicator"></span>
+              <span class="code-editor-title" id="code-algo-title">Bubble Sort Source Code</span>
+            </div>
+
+            <!-- Language Selector Tabs -->
+            <div class="code-lang-selector" role="tablist" aria-label="Language Selector">
+              <button class="code-lang-tab active" id="tab-java-code" data-lang="java" role="tab" aria-selected="true">
+                Java
+              </button>
+              <button class="code-lang-tab" id="tab-python-code" data-lang="python" role="tab" aria-selected="false">
+                Python
+              </button>
+              <button class="code-lang-tab" id="tab-pseudo-code" data-lang="pseudo" role="tab" aria-selected="false">
+                Pseudocode
+              </button>
+            </div>
+
+            <div class="code-editor-actions">
+              <button class="code-action-btn" id="btn-copy-code" title="Copy Complete Source Code" aria-label="Copy Code">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copy-btn-text">Copy Code</span>
+              </button>
+              <button class="code-action-btn" id="btn-toggle-expand-code" title="Expand / Collapse Code View" aria-label="Toggle Expand">
+                <svg class="expand-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <polyline points="9 21 3 21 3 15"></polyline>
+                  <line x1="21" y1="3" x2="14" y2="10"></line>
+                  <line x1="3" y1="21" x2="10" y2="14"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Code Display Container with Line Numbers & Syntax Highlighting -->
+          <div class="code-block-container" id="code-block-container">
+            <div class="code-display" id="code-display">
+              <!-- Code lines populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Synchronized Operation Analysis Box -->
+          <div class="line-explanation-box" id="code-explanation-box">
+            <span class="explanation-tag">CONCEPT</span>
+            <span id="code-explanation-text">Step through the animation to inspect synchronized line-by-line runtime execution.</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 3: ALGORITHM DEEP-DIVE STUDY ACADEMY
+         ====================================================================== -->
+    <section id="view-study" class="tab-view">
+      <div class="study-layout">
+        <!-- Sidebar Navigation -->
+        <div class="study-nav-card">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">
+            16 Sorting Algorithms
+          </h3>
+          <ul class="study-nav-list" id="study-nav-list">
+            <!-- Populated dynamically -->
+          </ul>
+        </div>
+
+        <!-- Detailed Content Card -->
+        <div class="study-content-card" id="study-content-container">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 4: QUIZ AND PRACTICE MODE
+         ====================================================================== -->
+    <section id="view-quiz" class="tab-view">
+      <div class="quiz-container">
+        <div class="quiz-header">
+          <div class="hero-tag">Exam Prep &amp; Self Assessment</div>
+          <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-primary);">
+            Sorting Knowledge Quiz
+          </h2>
+          <p style="color: var(--text-secondary);">
+            Test your understanding of Big-O complexity, algorithm stability, memory footprints, and partition mechanics.
+          </p>
+
+          <!-- Practice Mode Sorting Order Selector -->
+          <div class="sorting-order-group" style="margin-top: 1.25rem;">
+            <label class="select-label">Practice Mode Order:</label>
+            <div class="sorting-order-control" id="quiz-order-selector" role="radiogroup" aria-label="Practice Mode Sorting Order">
+              <button type="button" class="order-btn active" id="quiz-order-btn-asc" role="radio" aria-checked="true" data-order="ASCENDING" title="Practice Ascending Mode">
+                <svg class="order-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5"></line>
+                  <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+                <span>Ascending</span>
+              </button>
+              <button type="button" class="order-btn" id="quiz-order-btn-desc" role="radio" aria-checked="false" data-order="DESCENDING" title="Practice Descending Mode">
+                <svg class="order-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+                <span>Descending</span>
+              </button>
+            </div>
+            <span class="order-status-badge" id="quiz-order-badge">Ascending: Smallest to Largest</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="quiz-card">
+          <!-- Populated by quiz.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 5: MULTI-ALGORITHM COMPARISON LAB
+         ====================================================================== -->
+    <section id="view-compare" class="tab-view">
+      <div class="compare-container">
+        <div class="compare-header">
+          <div class="hero-tag">Empirical Benchmarking &amp; Comparison</div>
+          <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-primary);">
+            Multi-Algorithm Benchmark Lab
+          </h2>
+          <p style="color: var(--text-secondary);">
+            Execute multiple sorting algorithms on the exact same array and compare comparisons, swaps, writes, runtime, and verify directional correctness in real-time.
+          </p>
+        </div>
+
+        <!-- Configuration Bar -->
+        <div class="compare-config-card">
+          <div class="compare-config-top">
+            <div class="select-group">
+              <label for="compare-array-type" class="select-label">Dataset Distribution:</label>
+              <select id="compare-array-type" class="custom-select">
+                <option value="random">Random Integers (30 items)</option>
+                <option value="reversed">Reversed Sequence</option>
+                <option value="nearly_sorted">Nearly Sorted</option>
+                <option value="duplicates">Few Unique Duplicates</option>
+              </select>
+            </div>
+
+            <!-- Compare Sorting Order Selector -->
+            <div class="sorting-order-group">
+              <label class="select-label">Benchmark Order:</label>
+              <div class="sorting-order-control" id="compare-order-selector" role="radiogroup" aria-label="Comparison Sorting Order">
+                <button type="button" class="order-btn active" id="compare-order-btn-asc" role="radio" aria-checked="true" data-order="ASCENDING" title="Sort in Ascending Order">
+                  <svg class="order-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="19" x2="12" y2="5"></line>
+                    <polyline points="5 12 12 5 19 12"></polyline>
+                  </svg>
+                  <span>Ascending</span>
+                </button>
+                <button type="button" class="order-btn" id="compare-order-btn-desc" role="radio" aria-checked="false" data-order="DESCENDING" title="Sort in Descending Order">
+                  <svg class="order-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                  </svg>
+                  <span>Descending</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="compare-actions-group">
+              <button class="preset-btn" id="compare-select-all-btn">Select All (16)</button>
+              <button class="preset-btn" id="compare-deselect-all-btn">Deselect All</button>
+              <button class="btn-card primary" id="run-compare-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Run Fair Benchmark
+              </button>
+            </div>
+          </div>
+
+          <div class="compare-array-preview-row">
+            <span class="preview-label">Active Input Array:</span>
+            <code id="compare-array-preview" class="preview-array">[Loading test array...]</code>
+            <span class="order-status-badge" id="compare-order-badge">Ascending: Smallest to Largest</span>
+          </div>
+        </div>
+
+        <!-- Algorithm Selection Checkboxes -->
+        <div class="compare-selection-card">
+          <h3 class="selection-title">Select Algorithms to Compare:</h3>
+          <div class="compare-algo-checkboxes" id="compare-algo-checkboxes">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Results Table Card -->
+        <div class="compare-results-card">
+          <div class="results-header">
+            <h3 class="results-title">Benchmark Results</h3>
+            <span class="results-subtitle" id="compare-results-status">Click "Run Fair Benchmark" to compare algorithms on identical input data.</span>
+          </div>
+          <div class="table-responsive">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Algorithm</th>
+                  <th>Best</th>
+                  <th>Avg</th>
+                  <th>Worst</th>
+                  <th>Space</th>
+                  <th>Stable</th>
+                  <th>In-Place</th>
+                  <th>Comparisons</th>
+                  <th>Swaps</th>
+                  <th>Writes</th>
+                  <th>Execution Time</th>
+                  <th>Direction &amp; Verification</th>
+                </tr>
+              </thead>
+              <tbody id="compare-results-body">
+                <tr>
+                  <td colspan="12" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">
+                    No benchmark executed yet. Select algorithms and click "Run Fair Benchmark".
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Shared Global Website Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg class="footer-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="4 14 10 14 10 20"/>
+              <polyline points="20 10 14 10 14 4"/>
+              <line x1="14" y1="10" x2="21" y2="3"/>
+              <line x1="3" y1="21" x2="10" y2="14"/>
+            </svg>
+            <span class="footer-brand-title">SortMaster</span>
+            <span class="footer-brand-badge">DSA Sorting Academy</span>
+          </div>
+          <p class="footer-description">
+            Interactive algorithm visualization, step-by-step telemetry, and algorithmic analysis.
+          </p>
+        </div>
+
+        <div class="footer-dev-section">
+          <div class="developer-credit-line">
+            <span class="credit-text">Developed by <strong class="developer-name">Thenuka Munasinghe</strong></span>
+            <span class="credit-divider" aria-hidden="true">&middot;</span>
+            <a href="https://thenukamunasinghe.novabyte-labs.com/" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="developer-website-link" 
+               id="footer-dev-website-link"
+               aria-label="Visit Thenuka Munasinghe's personal website (opens in a new tab)">
+              <span>Visit My Website</span>
+              <svg class="external-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+          <div class="footer-copyright-line">
+            <span>&copy; <span id="current-year">2026</span> SortMaster. All rights reserved.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Custom Array Modal -->
+  <div class="modal-overlay" id="custom-array-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <h3 class="modal-title" id="modal-title">Enter Custom Integer Array</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">
+        Enter comma or space-separated integers (up to 100 elements). Negative numbers are supported.
+      </p>
+      <textarea id="custom-array-input" class="custom-textarea" placeholder="e.g. 45, 12, 85, 32, 89, -15, 39, 44, 1"></textarea>
+      <div class="modal-actions">
+        <button class="btn-card" id="modal-close-btn">Cancel</button>
+        <button class="btn-card primary" id="modal-apply-btn">Load Array</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/algorithms-data.js"></script>
+  <script src="js/sorting-engine.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/visualizer.js"></script>
+  <script src="js/code-panel.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/comparison.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

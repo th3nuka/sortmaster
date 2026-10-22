@@ -1,6 +1,7 @@
 /**
- * SortMaster API Client
- * Manages HTTP communication with the Spring Boot backend
+ * SortMaster API Client & Hybrid Engine Dispatcher
+ * Seamlessly talks to Spring Boot backend when present,
+ * or runs 100% client-side via SortingEngine for static hosting (GitHub Pages, Netlify, Vercel, offline).
  */
 
 const API = {
@@ -12,78 +13,94 @@ const API = {
       if (!response.ok) throw new Error('Health check failed');
       return await response.json();
     } catch (err) {
-      console.error('API Error: getHealth', err);
-      throw err;
+      return { status: 'UP', mode: 'CLIENT_SIDE_STATIC' };
     }
   },
 
   async getAllAlgorithms() {
     try {
-      const response = await fetch(`${this.baseUrl}/algorithms`);
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Failed to fetch algorithms');
+      if (window.location.protocol !== 'file:' && window.location.host) {
+        const response = await fetch(`${this.baseUrl}/algorithms`);
+        if (response.ok) {
+          return await response.json();
+        }
       }
-      return await response.json();
     } catch (err) {
-      console.error('API Error: getAllAlgorithms', err);
-      throw err;
+      // Fallback to local client engine
     }
+
+    if (window.SortingEngine) {
+      return window.SortingEngine.getAllMetadata();
+    }
+    throw new Error('Unable to load algorithms.');
   },
 
   async getAlgorithm(id) {
     try {
-      const response = await fetch(`${this.baseUrl}/algorithms/${encodeURIComponent(id)}`);
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `Failed to fetch algorithm ${id}`);
+      if (window.location.protocol !== 'file:' && window.location.host) {
+        const response = await fetch(`${this.baseUrl}/algorithms/${encodeURIComponent(id)}`);
+        if (response.ok) {
+          return await response.json();
+        }
       }
-      return await response.json();
     } catch (err) {
-      console.error(`API Error: getAlgorithm(${id})`, err);
-      throw err;
+      // Fallback to local client engine
     }
+
+    if (window.SortingEngine) {
+      const meta = window.SortingEngine.getAlgorithmMetadata(id);
+      if (meta) return meta;
+    }
+    throw new Error(`Algorithm ${id} not found.`);
   },
 
   async sort(algorithmId, array, detailLevel = 'NORMAL', order = 'ASCENDING') {
     try {
-      const response = await fetch(`${this.baseUrl}/sort`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          algorithm: algorithmId,
-          algorithmId,
-          array,
-          detailLevel,
-          order
-        })
-      });
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Sorting execution failed on server');
+      if (window.location.protocol !== 'file:' && window.location.host) {
+        const response = await fetch(`${this.baseUrl}/sort`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            algorithm: algorithmId,
+            algorithmId,
+            array,
+            detailLevel,
+            order
+          })
+        });
+        if (response.ok) {
+          return await response.json();
+        }
       }
-      return await response.json();
     } catch (err) {
-      console.error('API Error: sort', err);
-      throw err;
+      // Fallback to client-side
     }
+
+    if (window.SortingEngine) {
+      return window.SortingEngine.sort(algorithmId, array, detailLevel, order);
+    }
+    throw new Error('Sorting execution failed.');
   },
 
   async compare(algorithmIds, array, order = 'ASCENDING') {
     try {
-      const response = await fetch(`${this.baseUrl}/compare`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ algorithmIds, array, order })
-      });
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Comparison execution failed on server');
+      if (window.location.protocol !== 'file:' && window.location.host) {
+        const response = await fetch(`${this.baseUrl}/compare`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ algorithmIds, array, order })
+        });
+        if (response.ok) {
+          return await response.json();
+        }
       }
-      return await response.json();
     } catch (err) {
-      console.error('API Error: compare', err);
-      throw err;
+      // Fallback to client-side
     }
+
+    if (window.SortingEngine) {
+      return window.SortingEngine.compare(algorithmIds, array, order);
+    }
+    throw new Error('Comparison execution failed.');
   }
 };
